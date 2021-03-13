@@ -1,5 +1,3 @@
-import 'dotenv';
-
 export = {
   type: "postgres",
   host: process.env.DB_HOST,

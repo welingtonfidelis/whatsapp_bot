@@ -1,5 +1,6 @@
 import * as venom from 'venom-bot';
 import { promisify } from 'util';
+import 'dotenv';
 
 import './database/connect';
 
@@ -25,7 +26,7 @@ async function start(client) {
     console.log('INPUT', type, body);
 
     try {
-      if (from === '553599261656@c.us') {
+      if (from === `${process.env.CENTRAL_NUMBER}@c.us`) {
         if (type === 'chat' && body) {
           const command = body.split('/');
           const [_, option] = command;
