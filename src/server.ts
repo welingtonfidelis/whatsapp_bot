@@ -10,7 +10,7 @@ import {
 const executeCommandService = new ExecuteCommandService();
 
 venom
-  .create('main_bot')
+  .create('main_bot', null, null, { puppeteerOptions: { args: ['--no-sandbox'] } })
   .then((client) => start(client))
   .catch((error) => console.log(error));
 
