@@ -42,10 +42,25 @@ export class CreateCommands1615643241936 implements MigrationInterface {
             .into("commands")
             .values([
                 { name: 'commandlist', description: 'Show commands list' },
-                { name: 'grouplist', description: 'Show internal groups list' },
+               
+                { name: 'grouplist', description: 'Show internal groups list -> /grouplist/{page}' },
                 { name: 'groupadd', description: 'Add new internal group -> /groupadd/{group_name}/{group_description}' },
                 { name: 'groupremove', description: 'Remove internal group -> /grouparm/{group_id}' },
                 { name: 'groupupdate', description: 'Update internal group -> /groupaupdate/{group_id}/{group_new_name}' },
+
+                { name: 'clientlist', description: 'Show clients -> /clientlist/{page}'},
+                { name: 'clientadd', description: 'Add new client -> /clientadd/{client_number or client_number,client_number,client_number, ...}' },
+                { name: 'clientupdate', description: 'Update client -> /clientupdate/{client_id}/{client_number}' },
+                { name: 'clientremove', description: 'Remove client by id -> /clientremove/{client_id}' },
+                { name: 'clientremovebynumber', description: 'Remove client by number -> /clientremovebynumber/{client_number}' },
+
+                { name: 'groupclientlistbygroupid', description: 'Show clients in group by groupId -> /groupclientlistbygroupid/{group_id}/{page}'},
+                { name: 'groupclientlistbygroupname', description: 'Show clients in group by groupName -> /groupclientlistbygroupname/{group_name}/{page}'},
+                { name: 'groupclientadd', description: 'Add new client in group -> /groupclientadd/{group_id}/{client_number or client_number,client_number,client_number, ...}' },
+                { name: 'groupclientremovebygroupid', description: 'Remove client from group by groupId -> /groupclientremovebygroupid/{group_id}' },
+                { name: 'groupclientremovebyclientnumber', description: 'Remove client from group by clientNumber -> /groupclientremovebyclientnumber/{client_number}' },
+
+                { name: 'sendmessagetogroup', description: 'Send broadcast message to group by groupId -> /sendmessagetogroup/{group_id}/{text_message}'}
             ])
             .execute()
     }

@@ -2,33 +2,43 @@ import { getRepository } from 'typeorm'
 import { Group } from '../models';
 
 class GroupRepository {
-    index() {
-      const repository = getRepository(Group);
+  async index(page: number, limit: number) {
+    const repository = getRepository(Group);
 
-      return repository.find();
-    }
+    const total = await repository.count();
 
-    store(name: string, description: string) {
-      const repository = getRepository(Group);
+    console.log(total);
+    
+    const groups = await repository.find({
+      skip: page,
+      take: limit,
+      order: { id: 'ASC' },
+    });
 
-      const command = repository.create({ name, description });
-      
-      return repository.save(command);
-    }
+    return { total, groups }
+  }
 
-    async update(id: number, name: string) {
-      const repository = getRepository(Group);
+  store(name: string, description: string) {
+    const repository = getRepository(Group);
 
-      const group = await repository.findOne({ id });
-  
-      return repository.update(id, { ...group, name });
-    }
+    const command = repository.create({ name, description });
 
-    delete(id: number) {
-      const repository = getRepository(Group);
+    return repository.save(command);
+  }
 
-      return repository.delete({ id });
-    }
+  async update(id: number, name: string) {
+    const repository = getRepository(Group);
+
+    const group = await repository.findOne({ id });
+
+    return repository.update(id, { ...group, name });
+  }
+
+  delete(id: number) {
+    const repository = getRepository(Group);
+
+    return repository.delete({ id });
+  }
 
 }
 

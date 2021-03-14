@@ -3,8 +3,8 @@ import { GroupRepository } from '../repositories';
 const groupRepository = new GroupRepository();
 
 class GroupService {
-  index() {
-    return groupRepository.index();
+  index(page: number, limit: number) {
+    return groupRepository.index(page, limit);
   }
 
   store(name: string, description: string) {

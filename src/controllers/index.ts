@@ -1,7 +1,11 @@
 import { CommandController } from './CommandController';
 import { GroupController } from './GroupController';
+import { ClientController } from './ClientController';
+import { GroupClientController } from './GroupClientController';
 
 export {
     CommandController,
-    GroupController
+    GroupController,
+    ClientController,
+    GroupClientController,
 }

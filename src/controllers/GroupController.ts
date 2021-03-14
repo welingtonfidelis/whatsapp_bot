@@ -3,8 +3,11 @@ import { GroupService } from '../services';
 const groupService = new GroupService();
 
 class GroupController {
-    index() {
-        return groupService.index();
+    index(page: number) {
+        const limit = 10;
+        const skip = limit * (page - 1);
+
+        return groupService.index(skip, page);
     }
 
     store(name: string, description: string) {

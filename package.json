@@ -7,7 +7,9 @@
       "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "ts-node src/server.ts",
-      "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+      "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+      "migrate:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+      "migrate:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
    },
    "keywords": [],
    "author": "",
