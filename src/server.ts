@@ -10,7 +10,14 @@ import {
 const executeCommandService = new ExecuteCommandService();
 
 venom
-  .create('main_bot', null, null, { puppeteerOptions: { args: ['--no-sandbox'] } })
+  .create(
+    'main_bot',
+    (base64Qrimg) => {
+      console.log('base64 image string qrcode: ', base64Qrimg);
+    },
+    null,
+    { puppeteerOptions: { args: ['--no-sandbox'] } },
+  )
   .then((client) => start(client))
   .catch((error) => console.log(error));
 
