@@ -3,6 +3,10 @@ import { ClientRepository } from '../repositories';
 const clientRepository = new ClientRepository();
 
 class ClientService {
+  total() {
+    return clientRepository.total();
+  }
+
   index(page: number, limit: number) {
     return clientRepository.index(page, limit);
   }

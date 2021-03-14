@@ -27,8 +27,6 @@ async function start(client) {
     const { from, to, sender, type, body } = message;
     const { name } = sender;
 
-    console.log('INPUT', type, body);
-
     try {
       if (from === `${process.env.CENTRAL_NUMBER}@c.us`) {
         if (type === 'chat' && body) {
@@ -36,12 +34,14 @@ async function start(client) {
           const [_, option] = command;
 
           const executeCommand = executeCommandList[option];
-          if (executeCommand) await executeCommand(from, sendText, command);
+          if (executeCommand) await executeCommand(from, sendText, client, command);
           else await sendText(from, '🤔 Wrong Command. Remember, use "/".');
         }
         else await sendText(from, '🤔 Wrong Command.');
       }
-      else await sendText(from, `Hello ${name} 😄`);
+      else {
+        await sendText(from, `Hello ${name} 😄`);
+      }
     } catch (error) {
       console.log(error);
 
@@ -51,7 +51,7 @@ async function start(client) {
 }
 
 const executeCommandList = {
-  async commandlist(from, sendText) {
+  async commandlist(from, sendText, venomClient) {
     const commandList = await commandController.index();
 
     await Promise.all(
@@ -61,10 +61,16 @@ const executeCommandList = {
     );
   },
 
-  async grouplist(from, sendText, args) {
+  async grouptotal(from, sendText, venomClient, args) {
+    const total = await groupController.total();
+
+    await sendText(from, `Total groups: ${total}`);
+  },
+
+  async grouplist(from, sendText, venomClient, args) {
     const [_, __, page] = args;
 
-    const { total, groups } = await groupController.index(page);
+    const groups = await groupController.index(page);
 
     if (groups.length) {
       await Promise.all(
@@ -76,7 +82,7 @@ const executeCommandList = {
     else await sendText(from, 'No groups');
   },
 
-  async groupadd(from, sendText, args) {
+  async groupadd(from, sendText, venomClient, args) {
     const [_, __, name, description] = args;
 
     await groupController.store(name, description);
@@ -84,7 +90,7 @@ const executeCommandList = {
     await sendText(from, `Ok, inserting ${name}`);
   },
 
-  async groupupdate(from, sendText, args) {
+  async groupupdate(from, sendText, venomClient, args) {
     const [_, __, id, name] = args;
 
     await groupController.update(id, name);
@@ -92,7 +98,7 @@ const executeCommandList = {
     await sendText(from, `Ok, updating ${name}`);
   },
 
-  async groupremove(from, sendText, args) {
+  async groupremove(from, sendText, venomClient, args) {
     const [_, __, id] = args;
 
     await groupController.delete(id);
@@ -100,7 +106,13 @@ const executeCommandList = {
     await sendText(from, `Ok, deleting ${id}`);
   },
 
-  async clientlist(from, sendText, args) {
+  async clienttotal(from, sendText, venomClient, args) {
+    const total = await clientController.total();
+
+    await sendText(from, `Total clients: ${total}`);
+  },
+
+  async clientlist(from, sendText, venomClient, args) {
     const [_, __, page] = args;
 
     const clients = await clientController.index(page);
@@ -115,16 +127,16 @@ const executeCommandList = {
     else await sendText(from, 'No clients');
   },
 
-  async clientadd(from, sendText, args) {
+  async clientadd(from, sendText, venomClient, args) {
     const [_, __, clientNumbers] = args;
 
-    const arrayNumber: string[] = clientNumbers.split(",").map((item) =>  item.trim());
+    const arrayNumber: string[] = clientNumbers.split(",").map((item) => item.trim());
 
     await Promise.all(
       arrayNumber.map(async (number) => {
         if (number.length === 12) {
           await clientController.store(number);
-    
+
           await sendText(from, `Ok, inserting ${number}`);
         }
         else await sendText(from, `Error inserting ${number}. Remenber, use 553599999999`);
@@ -132,7 +144,7 @@ const executeCommandList = {
     )
   },
 
-  async clientupdate(from, sendText, args) {
+  async clientupdate(from, sendText, venomClient, args) {
     const [_, __, id, number] = args;
 
     await clientController.update(id, number);
@@ -140,7 +152,7 @@ const executeCommandList = {
     await sendText(from, `Ok, updating ${number}`);
   },
 
-  async clientremove(from, sendText, args) {
+  async clientremove(from, sendText, venomClient, args) {
     const [_, __, id] = args;
 
     await clientController.delete(id);
@@ -148,7 +160,7 @@ const executeCommandList = {
     await sendText(from, `Ok, deleting ${id}`);
   },
 
-  async clientremovebynumber(from, sendText, args) {
+  async clientremovebynumber(from, sendText, venomClient, args) {
     const [_, __, clientNumber] = args;
 
     if (clientNumber.length === 12) {
@@ -159,16 +171,24 @@ const executeCommandList = {
     else await sendText(from, `Error deleting ${clientNumber}. Remenber, use 553599999999`);
   },
 
-  async groupclientlistbygroupid(from, sendText, args) {
+  async groupclienttotal(from, sendText, venomClient, args) {
+    const [_, __, groupId] = args;
+
+    const total = await groupClientController.total(groupId);
+
+    await sendText(from, `Total groups: ${total}`);
+  },
+
+  async groupclientlistbygroupid(from, sendText, venomClient, args) {
     const [_, __, groupId, page] = args;
 
-    const { total, groupClients} = await groupClientController.indexByGroupId(groupId, page);
+    const groupClients = await groupClientController.indexByGroupId(groupId, page);
 
     if (groupClients.length) {
       await Promise.all(
         groupClients.map(async (item) => {
           await sendText(
-            from, 
+            from,
             `[ ID: ${item.id} ] [ CLIENT_ID: ${item.client_id} ] ${item.client.number}`
           );
         })
@@ -177,16 +197,16 @@ const executeCommandList = {
     else await sendText(from, 'No clients in group');
   },
 
-  async groupclientlistbygroupname(from, sendText, args) {
+  async groupclientlistbygroupname(from, sendText, venomClient, args) {
     const [_, __, groupName, page] = args;
 
-    const { total, groupClients} = await groupClientController.indexByGroupName(groupName, page);
+    const groupClients = await groupClientController.indexByGroupName(groupName, page);
 
     if (groupClients.length) {
       await Promise.all(
         groupClients.map(async (item) => {
           await sendText(
-            from, 
+            from,
             `[ ID: ${item.id} ] [ CLIENT_ID: ${item.client_id} ] ${item.client.number}`
           );
         })
@@ -195,16 +215,16 @@ const executeCommandList = {
     else await sendText(from, 'No clients in group');
   },
 
-  async groupclientadd(from, sendText, args) {
+  async groupclientadd(from, sendText, venomClient, args) {
     const [_, __, groupId, clientNumbers] = args;
 
-    const arrayNumber: string[] = clientNumbers.split(",").map((item) =>  item.trim());
+    const arrayNumber: string[] = clientNumbers.split(",").map((item) => item.trim());
 
     await Promise.all(
       arrayNumber.map(async (number) => {
         if (number.length === 12) {
           await groupClientController.store(groupId, number);
-    
+
           await sendText(from, `Ok, inserting ${number} in ${groupId}`);
         }
         else await sendText(from, `Error inserting ${number}. Remenber, use 553599999999`);
@@ -212,7 +232,7 @@ const executeCommandList = {
     )
   },
 
-  async groupclientremovebygroupid(from, sendText, args) {
+  async groupclientremovebygroupid(from, sendText, venomClient, args) {
     const [_, __, groupId] = args;
 
     await groupClientController.deleteByGroupId(groupId);
@@ -220,7 +240,7 @@ const executeCommandList = {
     await sendText(from, `Ok, deleting ${groupId}`);
   },
 
-  async groupclientremovebyclientnumber(from, sendText, args) {
+  async groupclientremovebyclientnumber(from, sendText, venomClient, args) {
     const [_, __, clientNumber] = args;
 
     if (clientNumber.length === 12) {
@@ -231,9 +251,32 @@ const executeCommandList = {
     else await sendText(from, `Error deleting ${clientNumber}. Remenber, use 553599999999`);
   },
 
-  async sendmessagetogroup(from, sendText, args) {
+  async sendmessagetogroup(from, sendText, venomClient, args) {
     const [_, __, groupId, message] = args;
 
-    
+    const total = await groupClientController.total(groupId);
+    const limit = 50;
+
+    for (let i = 0; i <= (total / limit); i += 1) {
+
+      const groupClients = await groupClientController.indexByGroupId(groupId, i + 1, limit);
+
+      if (groupClients.length) {
+        await Promise.all(
+          groupClients.map(async (item) => {
+            venomClient.sendText(`${item.client.number}@c.us`, message)
+            .then(result => {
+              console.log('ENVIADO ===>',item.client.number);
+            })
+            .catch(error => {
+              console.log('FAILED SEND', item.client.number, error);
+            })
+          })
+        );
+
+        venomClient.sendText(from, `Broadcast message end`);
+      }
+      else venomClient.sendText(from, `No clients`);
+    }
   }
 }

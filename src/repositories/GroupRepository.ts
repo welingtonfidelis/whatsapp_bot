@@ -2,20 +2,20 @@ import { getRepository } from 'typeorm'
 import { Group } from '../models';
 
 class GroupRepository {
-  async index(page: number, limit: number) {
+  total () {
     const repository = getRepository(Group);
 
-    const total = await repository.count();
+    return repository.count();
+  }
 
-    console.log(total);
-    
-    const groups = await repository.find({
+  index(page: number, limit: number) {
+    const repository = getRepository(Group);
+
+    return repository.find({
       skip: page,
       take: limit,
       order: { id: 'ASC' },
     });
-
-    return { total, groups }
   }
 
   store(name: string, description: string) {

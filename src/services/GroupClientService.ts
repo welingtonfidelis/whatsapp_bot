@@ -3,6 +3,10 @@ import { GroupClientRepository } from '../repositories';
 const groupClientRepository = new GroupClientRepository();
 
 class GroupClientService {
+  total(groupId: number) {
+    return groupClientRepository.total(groupId);
+  }
+
   indexByGroupId(groupId: number, page: number, limit: number) {
     return groupClientRepository.indexByGroupId(groupId, page, limit);
   }

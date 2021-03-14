@@ -3,8 +3,11 @@ import { GroupClientService } from '../services';
 const groupClientService = new GroupClientService();
 
 class GroupClientController {
-    indexByGroupId(groupId: number, page: number = 1) {
-        const limit = 10;
+    total(groupId: number) {
+        return groupClientService.total(groupId);
+    }
+
+    indexByGroupId(groupId: number, page: number = 1, limit: number = 10) {
         const skip = limit * (page - 1);
 
         return groupClientService.indexByGroupId(groupId, skip, limit);

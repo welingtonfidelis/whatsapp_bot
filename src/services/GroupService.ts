@@ -3,6 +3,10 @@ import { GroupRepository } from '../repositories';
 const groupRepository = new GroupRepository();
 
 class GroupService {
+  total() {
+    return groupRepository.total()
+  }
+  
   index(page: number, limit: number) {
     return groupRepository.index(page, limit);
   }

@@ -3,6 +3,10 @@ import { ClientService } from '../services';
 const clientService = new ClientService();
 
 class ClientController {
+    total() {
+        return clientService.total();
+    }
+    
     index(page: number = 1) {
         const limit = 10;
         const skip = limit * (page - 1);
@@ -21,7 +25,7 @@ class ClientController {
     delete(id: number) {
         return clientService.delete(id);
     }
-    
+
     deleteByNumber(clientNumber: string) {
         return clientService.deleteByNumber(clientNumber);
     }

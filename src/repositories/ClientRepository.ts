@@ -2,6 +2,12 @@ import { getRepository } from 'typeorm'
 import { Client } from '../models';
 
 class ClientRepository {
+  total() {
+    const repository = getRepository(Client);
+
+    return repository.count();
+  }
+
   index(page: number, limit: number) {
     const repository = getRepository(Client);
 
