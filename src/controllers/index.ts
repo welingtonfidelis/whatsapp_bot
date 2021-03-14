@@ -4,8 +4,8 @@ import { ClientController } from './ClientController';
 import { GroupClientController } from './GroupClientController';
 
 export {
-    CommandController,
-    GroupController,
-    ClientController,
-    GroupClientController,
-}
+  CommandController,
+  GroupController,
+  ClientController,
+  GroupClientController,
+};

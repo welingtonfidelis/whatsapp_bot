@@ -7,5 +7,5 @@ export {
   Command,
   Group,
   Client,
-  GroupClient
+  GroupClient,
 };

@@ -3,32 +3,32 @@ import { ClientService } from '../services';
 const clientService = new ClientService();
 
 class ClientController {
-    total() {
-        return clientService.total();
-    }
-    
-    index(page: number = 1) {
-        const limit = 10;
-        const skip = limit * (page - 1);
+  total() {
+    return clientService.total();
+  }
 
-        return clientService.index(skip, limit);
-    }
+  index(page: number = 1) {
+    const limit = 10;
+    const skip = limit * (page - 1);
 
-    store(number: string) {
-        return clientService.store(number);
-    }
+    return clientService.index(skip, limit);
+  }
 
-    update(id: number, number: string) {
-        return clientService.update(id, number);
-    }
+  store(number: string) {
+    return clientService.store(number);
+  }
 
-    delete(id: number) {
-        return clientService.delete(id);
-    }
+  update(id: number, number: string) {
+    return clientService.update(id, number);
+  }
 
-    deleteByNumber(clientNumber: string) {
-        return clientService.deleteByNumber(clientNumber);
-    }
+  delete(id: number) {
+    return clientService.delete(id);
+  }
+
+  deleteByNumber(clientNumber: string) {
+    return clientService.deleteByNumber(clientNumber);
+  }
 }
 
-export { ClientController }
+export { ClientController };

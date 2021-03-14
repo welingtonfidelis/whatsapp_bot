@@ -1,6 +1,6 @@
 import {
-    Entity, PrimaryGeneratedColumn, Column
-} from 'typeorm'
+  Entity, PrimaryGeneratedColumn, Column,
+} from 'typeorm';
 
 @Entity('clients')
 class Client {
@@ -11,9 +11,9 @@ class Client {
     number: string;
 
     constructor(id: number, number: string) {
-        this.id = id;
-        this.number = number;
+      this.id = id;
+      this.number = number;
     }
 }
 
-export { Client }
+export { Client };

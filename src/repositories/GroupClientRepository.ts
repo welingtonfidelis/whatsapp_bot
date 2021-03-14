@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm'
+import { getRepository } from 'typeorm';
 import { Client, Group, GroupClient } from '../models';
 
 class GroupClientRepository {
@@ -16,7 +16,7 @@ class GroupClientRepository {
       skip: page,
       take: limit,
       order: { id: 'ASC' },
-      relations: ['client']
+      relations: ['client'],
     });
   }
 
@@ -31,7 +31,7 @@ class GroupClientRepository {
       skip: page,
       take: limit,
       order: { id: 'ASC' },
-      relations: ['client']
+      relations: ['client'],
     });
   }
 
@@ -71,7 +71,9 @@ class GroupClientRepository {
 
       return groupClientRepository.delete({ client_id: clientId });
     }
+
+    return null;
   }
 }
 
-export { GroupClientRepository }
+export { GroupClientRepository };

@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm'
+import { getRepository } from 'typeorm';
 import { Group } from '../models';
 
 class GroupRepository {
-  total () {
+  total() {
     const repository = getRepository(Group);
 
     return repository.count();
@@ -39,7 +39,6 @@ class GroupRepository {
 
     return repository.delete({ id });
   }
-
 }
 
-export { GroupRepository }
+export { GroupRepository };

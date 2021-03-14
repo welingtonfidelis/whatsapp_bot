@@ -26,6 +26,6 @@ class ClientService {
   deleteByNumber(clientNumber: string) {
     return clientRepository.deleteByNumber(clientNumber);
   }
-};
+}
 
 export { ClientService };

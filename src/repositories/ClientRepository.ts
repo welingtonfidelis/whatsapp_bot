@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm'
+import { getRepository } from 'typeorm';
 import { Client } from '../models';
 
 class ClientRepository {
-  total() {
+  public total() {
     const repository = getRepository(Client);
 
     return repository.count();
@@ -14,7 +14,7 @@ class ClientRepository {
     return repository.find({
       skip: page,
       take: limit,
-      order: { id: 'ASC' }
+      order: { id: 'ASC' },
     });
   }
 
@@ -45,4 +45,4 @@ class ClientRepository {
   }
 }
 
-export { ClientRepository }
+export { ClientRepository };

@@ -4,21 +4,21 @@ import 'dotenv';
 import './database/connect';
 
 import {
- ExecuteCommandService
-} from './services'
+  ExecuteCommandService,
+} from './services';
 
 const executeCommandService = new ExecuteCommandService();
 
 venom
   .create('main_bot')
   .then((client) => start(client))
-  .catch((erro) => {
-    console.log(erro);
-  });
+  .catch((error) => console.log(error));
 
 async function start(venomClient) {
   venomClient.onMessage(async (message) => {
-    const { from, to, sender, type, body } = message;
+    const {
+      from, to, sender, type, body,
+    } = message;
     const { name } = sender;
 
     try {
@@ -27,7 +27,7 @@ async function start(venomClient) {
           const command = body.split('/');
           const [_, option] = command;
 
-          const executeCommand = executeCommandService.executeCommandList[option]
+          const executeCommand = executeCommandService.executeCommandList[option];
           if (executeCommand) await executeCommand(from, venomClient, command);
           else venomClient.sendText(from, '🤔 Wrong Command. Remember, use "/".');
         }

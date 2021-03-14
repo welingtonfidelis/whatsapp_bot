@@ -1,12 +1,12 @@
-import { getRepository } from 'typeorm'
+import { getRepository } from 'typeorm';
 import { Command } from '../models';
 
 class CommandRepository {
-    index() {
-      const repository = getRepository(Command);
+  index() {
+    const repository = getRepository(Command);
 
-      return repository.find();
-    }
+    return repository.find();
+  }
 }
 
-export { CommandRepository }
+export { CommandRepository };

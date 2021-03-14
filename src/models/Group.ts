@@ -1,6 +1,6 @@
 import {
-    Entity, PrimaryGeneratedColumn, Column
-} from 'typeorm'
+  Entity, PrimaryGeneratedColumn, Column,
+} from 'typeorm';
 
 @Entity('groups')
 class Group {
@@ -14,10 +14,10 @@ class Group {
     description: string
 
     constructor(id: number, name: string, description: string) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+      this.id = id;
+      this.name = name;
+      this.description = description;
     }
 }
 
-export { Group }
+export { Group };
