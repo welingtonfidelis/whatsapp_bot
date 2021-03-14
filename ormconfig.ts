@@ -1,5 +1,5 @@
 export = {
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   username: process.env.DB_USER,
@@ -7,14 +7,17 @@ export = {
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   entities: [
-    "src/models/*.ts"
+    'src/models/*.ts',
   ],
   migrations: [
-    "src/database/migrations/*.ts"
+    'src/database/migrations/*.ts',
   ],
   cli: {
-    entitiesDir: "src/models",
-    migrationsDir: "src/database/migrations"
-  }
+    entitiesDir: 'src/models',
+    migrationsDir: 'src/database/migrations',
+  },
 }
