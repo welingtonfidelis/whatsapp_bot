@@ -26,6 +26,6 @@ class GroupClientService {
   deleteByClientNumber(clientNumber: string) {
     return groupClientRepository.deleteByClientNumber(clientNumber);
   }
-};
+}
 
 export { GroupClientService };

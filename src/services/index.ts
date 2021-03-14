@@ -5,9 +5,9 @@ import { GroupClientService } from './GroupClientService';
 import { ExecuteCommandService } from './ExecuteCommandService';
 
 export {
-    CommandService,
-    GroupService,
-    ClientService,
-    GroupClientService,
-    ExecuteCommandService,
-}
+  CommandService,
+  GroupService,
+  ClientService,
+  GroupClientService,
+  ExecuteCommandService,
+};

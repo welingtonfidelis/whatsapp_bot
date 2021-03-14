@@ -47,8 +47,8 @@ export class CreateCommands1615643241936 implements MigrationInterface {
         { name: 'grouptotal', description: 'Show total groups -> /grouptotal' },
         { name: 'grouplist', description: 'Show internal groups list -> /grouplist/{page}' },
         { name: 'groupadd', description: 'Add new internal group -> /groupadd/{group_name}/{group_description}' },
-        { name: 'groupremove', description: 'Remove internal group -> /grouparm/{group_id}' },
-        { name: 'groupupdate', description: 'Update internal group -> /groupaupdate/{group_id}/{group_new_name}' },
+        { name: 'groupremove', description: 'Remove internal group -> /groupremove/{group_id}' },
+        { name: 'groupupdate', description: 'Update internal group -> /groupupdate/{group_id}/{group_new_name}' },
 
         { name: 'clienttotal', description: 'Show total clients -> /clienttotal' },
         { name: 'clientlist', description: 'Show clients -> /clientlist/{page}' },

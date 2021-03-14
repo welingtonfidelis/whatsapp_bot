@@ -7,9 +7,9 @@ export = {
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // ssl: { // ONLY IN PRODUCTION
+  //   rejectUnauthorized: false,
+  // },
   entities: [
     'src/models/*.ts',
   ],

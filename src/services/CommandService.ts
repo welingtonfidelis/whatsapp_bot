@@ -6,6 +6,6 @@ class CommandService {
   index() {
     return commandRepository.index();
   }
-};
+}
 
 export { CommandService };

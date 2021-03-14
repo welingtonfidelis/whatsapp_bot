@@ -4,9 +4,9 @@ const groupRepository = new GroupRepository();
 
 class GroupService {
   total() {
-    return groupRepository.total()
+    return groupRepository.total();
   }
-  
+
   index(page: number, limit: number) {
     return groupRepository.index(page, limit);
   }
@@ -22,6 +22,6 @@ class GroupService {
   delete(id: number) {
     return groupRepository.delete(id);
   }
-};
+}
 
 export { GroupService };
